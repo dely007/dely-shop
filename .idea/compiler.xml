@@ -9,11 +9,14 @@
         <module name="shopgateway" />
         <module name="shopcommon" />
         <module name="shopuserservice" />
-        <module name="shop-coupon-service" />
+        <module name="shop-order" />
         <module name="shopuserapi" />
+        <module name="shop-product" />
+        <module name="shop-coupon" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="shop-coupon-service" target="1.8" />
       <module name="shopcouponservice" target="1.8" />
       <module name="shoporderservice" target="1.8" />
       <module name="shopproductservice" target="1.8" />
