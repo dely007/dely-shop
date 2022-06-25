@@ -144,18 +144,17 @@
     </pluginRepositories>-->
 
     <!--module不用添加打包版本信息-->
-    <!--<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>2.2.6.RELEASE</version>
                 <configuration>
-                    <fork>true</fork>
-                    <addResources>true</addResources>
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>
-    </build>-->
+    </build>
 
 </project>
