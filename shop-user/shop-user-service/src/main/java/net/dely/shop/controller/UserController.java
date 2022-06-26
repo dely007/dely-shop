@@ -6,7 +6,6 @@ import net.dely.shop.storage.mysql.entity.UserDO;
 import net.dely.shop.storage.mysql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +28,10 @@ public class UserController {
 
     @GetMapping("/test/")
     public UserDO test() {
-        log.info("请求进来");
+        //测试日志 脱敏
+        log.info("1176322485@QQ.COM");
+        log.info("13144127277");
+        //测试操作数据库
         return userService.getById(3);
     }
 
