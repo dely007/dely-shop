@@ -1,12 +1,15 @@
 package net.dely.shop.storage.mysql.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import net.dely.shop.annotation.Sensitive;
+import net.dely.shop.enums.SensitiveStrategy;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 /**
@@ -61,12 +64,17 @@ public class UserDO implements Serializable {
     /**
      * 邮箱
      */
+    @Sensitive(strategy = SensitiveStrategy.EMAIL)
     private String mail;
 
     /**
      * 盐，用于个人敏感信息处理
      */
     private String secret;
+
+    @Sensitive(strategy = SensitiveStrategy.PHONE)
+    @TableField(exist = false)
+    private String phone="13144127277";
 
 
 }

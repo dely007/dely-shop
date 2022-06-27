@@ -1,10 +1,11 @@
-package constant;
+package net.dely.shop.constant;
 
 /**
  * 公共常用变量
  * User: dengjiaxin
- * Date: 2022/6/26
- * Time: 18:48
+ * Date: 2022/6/27
+ * Time: 23:12
+ * To change this template use File | Settings | File Templates.
  * @author admin
  */
 public class Constant {
