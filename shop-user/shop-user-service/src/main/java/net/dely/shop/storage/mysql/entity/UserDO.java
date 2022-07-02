@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import net.dely.shop.annotation.Sensitive;
-import net.dely.shop.enums.SensitiveStrategy;
+import net.dely.shop.annotation.Encrypt;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,7 +21,7 @@ import java.util.Date;
  */
 @Data
 @TableName("user")
-public class UserDO implements Serializable {
+public class UserDO implements Serializable, Encrypted {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +36,7 @@ public class UserDO implements Serializable {
     /**
      * 密码
      */
+    @Encrypt
     private String pwd;
 
     /**
@@ -64,7 +64,8 @@ public class UserDO implements Serializable {
     /**
      * 邮箱
      */
-    @Sensitive(strategy = SensitiveStrategy.EMAIL)
+//    @Sensitive(strategy = SensitiveStrategy.EMAIL)
+    @Encrypt
     private String mail;
 
     /**
@@ -72,9 +73,14 @@ public class UserDO implements Serializable {
      */
     private String secret;
 
-    @Sensitive(strategy = SensitiveStrategy.PHONE)
+//    @Sensitive(strategy = SensitiveStrategy.PHONE)
     @TableField(exist = false)
     private String phone="13144127277";
 
+
+    @Override
+    public String[] getEncryptFields() {
+        return new String[]{"pwd","mail"};
+    }
 
 }
