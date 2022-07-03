@@ -1,0 +1,5 @@
+# Spring
+spring:
+  profiles:
+    # 环境配置
+    active: dev

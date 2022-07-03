@@ -6,7 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="shopjobadmin" />
         <module name="shopgateway" />
+        <module name="shopjobexecutor" />
         <module name="shopcommon" />
         <module name="shopuserservice" />
         <module name="shop-order" />

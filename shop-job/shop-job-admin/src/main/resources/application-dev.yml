@@ -1,0 +1,85 @@
+### web
+server:
+  port: 8080
+  servlet:
+    context-path: /xxl-job-admin
+
+### actuator
+management:
+  server:
+    servlet:
+      context-path: /actuator
+  health:
+    mail:
+      enabled: false
+
+### resources
+spring:
+  resources:
+    static-locations: classpath:/static/
+  mvc:
+    static-path-pattern: /static/**
+    servlet:
+      load-on-startup: "0"
+### freemarker
+  freemarker:
+    charset: UTF-8
+    settings:
+      number_format: 0.##########
+    request-context-attribute: request
+    templateLoaderPath: classpath:/templates/
+    suffix: .ftl
+### xxl-job, datasource
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/xxl_job?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+### datasource-pool
+    type: "com.zaxxer.hikari.HikariDataSource"
+    hikari:
+      connection-timeout: 10000
+      auto-commit: true
+      max-lifetime: 900000
+      pool-name: "HikariCP"
+      validation-timeout: 1000
+      minimum-idle: "10"
+      connection-test-query: SELECT 1
+      idle-timeout: 30000
+      maximum-pool-size: 30
+### xxl-job, email
+  mail:
+    password: xxx
+    port: 25
+    host: 1176322485.qq.com
+    from: 1176322485.qq.com
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+    username: 1176322485.qq.com
+
+### mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
+  type-aliases-package: net.dely.shop.core.model
+
+### xxl-job, access token
+xxl:
+  job:
+    accessToken: delyshop.net
+### xxl-job, i18n (default is zh_CN, and you can choose "zh_CN", "zh_TC" and "en")
+    i18n: zh_CN
+## xxl-job, triggerpool max size
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100
+### xxl-job, log retention days
+    logretentiondays: 30
