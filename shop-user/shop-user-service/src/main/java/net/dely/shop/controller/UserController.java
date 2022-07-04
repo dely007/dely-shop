@@ -4,9 +4,14 @@ package net.dely.shop.controller;
 import lombok.extern.slf4j.Slf4j;
 import net.dely.shop.storage.mysql.entity.UserDO;
 import net.dely.shop.storage.mysql.service.UserService;
+import net.dely.shop.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -24,6 +29,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @GetMapping("/test")
     public UserDO test(long id) {
@@ -71,6 +82,57 @@ public class UserController {
         userService.update(updateWrapper);
         UserDO byId = userService.getById(47);*/
         return null;
+    }
+
+
+    @GetMapping("/testRedis/")
+    public Object testRedis() throws IOException {
+//        UserDO userDO = new UserDO();
+//        userDO.setPwd("123");
+//        userDO.setName("djx");
+//        redisUtil.set("shop:user", JSON.toJSONString(userDO));
+//        String s = redisUtil.get("shop:user");
+//        UserDO userDO1 = JSON.parseObject(s, UserDO.class);
+//        redisTemplate.opsForValue().set("test",userDO);
+//        TestDO testDO = new TestDO();
+//        testDO.setHeadImg("1");
+//        testDO.setSlogan("2");
+//
+//        Map<String, String> maps = new HashMap<>(8);
+//        maps.put("1", JSON.toJSONString(testDO));
+//        maps.put("2", JSON.toJSONString(testDO));
+//        redisUtil.hPutAll("HAMAP",maps);
+//
+//        Map<Object, Object> map = redisUtil.hGetAll("HAMAP");
+//        Set<Map.Entry<Object, Object>> entries = map.entrySet();
+//        for (Map.Entry<Object, Object> entry : entries) {
+//            System.out.println(entry.getKey());
+//            System.out.println(entry.getValue());
+//            Object value = entry.getValue();
+//            TestDO testDO1 = JSON.parseObject((String) entry.getValue(), TestDO.class);
+//            System.out.println(testDO1);
+//        }
+//        String hamap = (String) redisUtil.hGet("HAMAP", "1");
+//        TestDO testDO2 = JSON.parseObject(hamap, TestDO.class);
+//        System.out.println(testDO2);
+//        Set<ZSetOperations.TypedTuple<String>> values = new HashSet<>();
+////
+////
+////        DefaultTypedTuple member1 = new DefaultTypedTuple( "小明", 100.0);
+////        DefaultTypedTuple member2 = new DefaultTypedTuple( "小王", 99.5);
+////
+////        values.add(member1);
+////        values.add(member2);
+////        Long zset = redisUtil.zAdd("zset", values);
+////        System.out.println("zset"+zset);
+////
+////        Set<String> zset1 = redisUtil.zRange("zset", 0, -1);
+////        System.out.println(zset1);
+
+        redisUtil.set("expireTime","expireTime",60L);
+        Long expireTime = redisUtil.getExpire("expireTime");
+        System.out.println("expireTime=="+expireTime);
+        return "success";
     }
 
 }
