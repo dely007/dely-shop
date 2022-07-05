@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.dely.shop.storage.mysql.entity.UserDO;
 import net.dely.shop.storage.mysql.service.UserService;
 import net.dely.shop.util.RedisUtil;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * <p>
@@ -35,6 +38,9 @@ public class UserController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     @GetMapping("/test")
     public UserDO test(long id) {
@@ -133,6 +139,27 @@ public class UserController {
         Long expireTime = redisUtil.getExpire("expireTime");
         System.out.println("expireTime=="+expireTime);
         return "success";
+    }
+
+    @GetMapping("/redission/")
+    public Object redission() throws InterruptedException {
+
+        System.out.println("thread1="+Thread.currentThread().getName());
+        RLock rLock =  redissonClient.getLock("lockname5");
+        if (rLock.tryLock()){
+            try {
+                System.out.println("时间为="+new Date());
+                return "success";
+            } finally {
+                Thread.sleep(10000);
+                System.out.println("thread2="+Thread.currentThread().getName());
+                rLock.unlock();
+            }
+        }else {
+            System.out.println("thread3="+Thread.currentThread().getName());
+            System.out.println("时间为="+new Date());
+            return "fail";
+        }
     }
 
 }
