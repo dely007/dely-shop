@@ -1,6 +1,12 @@
 package net.dely.shop.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import net.dely.shop.storage.mysql.entity.UserDO;
 import net.dely.shop.storage.mysql.service.UserService;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,6 +35,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/user")
 @Slf4j
+@Api(tags = "测试相关接口")
 public class UserController {
 
     @Autowired
@@ -42,8 +50,10 @@ public class UserController {
     @Autowired
     private RedissonClient redissonClient;
 
+    @ApiOperation("测试数据库加解密")
     @GetMapping("/test")
-    public UserDO test(long id) {
+    public UserDO test(@ApiParam(value = "运单id",required = true)long id, HttpServletRequest request) {
+        String token = request.getHeader("token");
 //        //测试日志 脱敏
 //        String msg="1176322485@QQ.COM";
 //        String tel="13144127277";
@@ -64,6 +74,7 @@ public class UserController {
         return userDO;
     }
 
+    @ApiOperation("测试AOP")
     @GetMapping("/add/")
     public UserDO add(String a) {
 //        boolean success = userService.saveBatch(Arrays.asList(UserDO));
@@ -90,7 +101,7 @@ public class UserController {
         return null;
     }
 
-
+    @ApiOperation("测试redis")
     @GetMapping("/testRedis/")
     public Object testRedis() throws IOException {
 //        UserDO userDO = new UserDO();
@@ -103,6 +114,10 @@ public class UserController {
 //        TestDO testDO = new TestDO();
 //        testDO.setHeadImg("1");
 //        testDO.setSlogan("2");
+        Object test = redisTemplate.opsForValue().get("test");
+        UserDO object = JSONObject.parseObject(JSON.toJSONString(test), new TypeReference<UserDO>() {
+        });
+        System.out.println("object="+object);
 //
 //        Map<String, String> maps = new HashMap<>(8);
 //        maps.put("1", JSON.toJSONString(testDO));
@@ -135,16 +150,25 @@ public class UserController {
 ////        Set<String> zset1 = redisUtil.zRange("zset", 0, -1);
 ////        System.out.println(zset1);
 
-        redisUtil.set("expireTime","expireTime",60L);
-        Long expireTime = redisUtil.getExpire("expireTime");
-        System.out.println("expireTime=="+expireTime);
-        return "success";
+//        redisUtil.set("expireTime","expireTime",60L);
+//        Long expireTime = redisUtil.getExpire("expireTime");
+//        System.out.println("expireTime=="+expireTime);
+        return object;
     }
 
+    @ApiOperation("测试分布式锁")
     @GetMapping("/redission/")
     public Object redission() throws InterruptedException {
 
         System.out.println("thread1="+Thread.currentThread().getName());
+//        String lockName = "lockkey";
+//        LockUtil.lock(lockName,()->{
+//            log.info("普通加锁，无返回值");
+//        });
+//        String result = LockUtil.lock(lockName, () -> {
+//            log.info("普通加锁，无返回值");
+//            return "返回值";
+//        });
         RLock rLock =  redissonClient.getLock("lockname5");
         if (rLock.tryLock()){
             try {

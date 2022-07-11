@@ -6,7 +6,6 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -64,8 +63,7 @@ public class RedisLockerImpl implements Locker {
             if (lock.tryLock(timeout,TimeUnit.SECONDS)){
                 log.debug("get lock, name={}", name);
                 try {
-                    T t = supplier.get();
-                    return t;
+                    return supplier.get();
                 } finally {
                     log.debug("release lock, name={}", name);
                     lock.unlock();
