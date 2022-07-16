@@ -15,6 +15,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +40,7 @@ public class RequestLogAspect {
         }else {
             // 获取请求参数
             Map<String, Object> requestParams = getRequestParams(pjp);
+            log.info("请求" + pjp.getSignature().toShortString() + "方法,请求参数：" + JSON.toJSONString(requestParams));
             log.info("请求" + pjp.getSignature().getDeclaringTypeName()+"."+ pjp.getSignature().getName()+"()" + "方法,请求参数：" + JSON.toJSONString(requestParams));
         }
         Long startTime = System.currentTimeMillis();
@@ -67,6 +69,10 @@ public class RequestLogAspect {
         Object[] paramValues = proceedingJoinPoint.getArgs();
         for (int i = 0; i < paramNames.length; i++) {
             Object value = paramValues[i];
+            // 如果参数类型是请求和响应的http，则不需要拼接【这两个参数，使用JSON.toJSONString()转换会抛异常】
+            if (value instanceof HttpServletRequest || value instanceof HttpServletResponse) {
+                continue;
+            }
             // 如果是文件对象
             if (value instanceof MultipartFile) {
                 MultipartFile file = (MultipartFile) value;
@@ -93,6 +99,10 @@ public class RequestLogAspect {
         Object[] paramValues = proceedingJoinPoint.getArgs();
         for (int i = 0; i < paramNames.length; i++) {
             Object value = paramValues[i];
+            // 如果参数类型是请求和响应的http，则不需要拼接【这两个参数，使用JSON.toJSONString()转换会抛异常】
+            if (value instanceof HttpServletRequest || value instanceof HttpServletResponse) {
+                continue;
+            }
             // 如果是文件对象
             if (value instanceof MultipartFile) {
                 MultipartFile file = (MultipartFile) value;

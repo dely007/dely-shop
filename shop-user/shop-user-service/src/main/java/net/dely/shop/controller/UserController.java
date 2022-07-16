@@ -180,8 +180,7 @@ public class UserController {
 //        testDO.setHeadImg("1");
 //        testDO.setSlogan("2");
         Object test = redisTemplate.opsForValue().get("test");
-        UserDO object = JSONObject.parseObject(JSON.toJSONString(test), new TypeReference<UserDO>() {
-        });
+        UserDO object = JSONObject.parseObject(JSON.toJSONString(test), new TypeReference<UserDO>() {});
         System.out.println("object="+object);
 //
 //        Map<String, String> maps = new HashMap<>(8);

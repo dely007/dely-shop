@@ -60,7 +60,7 @@ public class CommonUtil {
         } catch (Exception e) {
             ipAddress = "";
         }
-        return ipAddress;
+        return "0:0:0:0:0:0:0:1".equals(ipAddress) ? "127.0.0.1" : ipAddress;
     }
 
 
