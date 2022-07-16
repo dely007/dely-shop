@@ -2,6 +2,7 @@ package net.dely.shop.controller;
 
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.dely.shop.Request.UserLoginRequest;
 import net.dely.shop.model.LoginUser;
@@ -34,6 +35,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("login")
+    @ApiOperation("登录")
     public ResultData register(@RequestBody UserLoginRequest loginRequest){
         LoginUser loginUser = LoginUser.builder().id(1L).name("DJX").mail("1176322485@QQ.COM").headImg("123.png").build();
         String token = JWTUtil.geneJsonWebToken(loginUser);
@@ -45,6 +47,7 @@ public class LoginController {
      * @return
      */
     @GetMapping("getToken")
+    @ApiOperation("测试TOKEN内容")
     public ResultData getToken(HttpServletRequest request){
         String token = "AuthorizationeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWx5c2hvcCIsImhlYWRJbWciOiIxMjMucG5nIiwiaWQiOjEsIm5hbWUiOiJESlgiLCJtYWlsIjoiMTE3NjMyMjQ4NUBRUS5DT00iLCJpYXQiOjE2NTc5ODQ5MDksImV4cCI6MTY1OTczNzk0MX0.Iof_PTvOL2rX_HkYeQpAm8TTS4vjtnJwZGilUYRN3Y8";
         Claims claims = JWTUtil.checkJWT(token);

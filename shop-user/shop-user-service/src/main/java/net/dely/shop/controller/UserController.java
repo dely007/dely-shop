@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2022-06-25
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("api/user")
 @Slf4j
 @Api(tags = "测试相关接口")
 public class UserController {
@@ -130,8 +130,8 @@ public class UserController {
         UserDO byId = userService.getById(id);
         UserDO byId1 = userService.getById(47);
 
-        byId.setPwd("1234567890");
-        byId1.setPwd("1234567890");
+        byId.setPwd("12345678");
+        byId1.setPwd("12345678");
 //        userService.saveOrUpdate(byId);
         userService.updateBatchById(Arrays.asList(byId,byId1));
         UserDO userDO = userService.getById(id);
