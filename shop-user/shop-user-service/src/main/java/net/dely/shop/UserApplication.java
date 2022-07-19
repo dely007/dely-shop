@@ -3,6 +3,7 @@ package net.dely.shop;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("net.dely.shop.storage.mysql.mapper")
+@EnableDiscoveryClient
 public class UserApplication {
 
     public static void main(String[] args) {

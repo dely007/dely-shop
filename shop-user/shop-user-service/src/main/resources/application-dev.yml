@@ -7,6 +7,15 @@ spring:
     # 应用名称
     name: shop-user-server
 
+  cloud:
+    nacos:
+      # 服务发现
+      discovery:
+        server-addr: 192.168.222.128:8848
+        #用于分组 测试
+        group: djx-mall
+        #dev 的id
+        namespace: 59e99910-5091-4a9b-bc3b-b3a44fdaf2bd
   #数据库配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
