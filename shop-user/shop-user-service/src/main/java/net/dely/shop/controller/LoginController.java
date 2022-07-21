@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.dely.shop.OpenfeignTest;
 import net.dely.shop.Request.UserLoginRequest;
 import net.dely.shop.model.LoginUser;
 import net.dely.shop.storage.mysql.service.UserService;
@@ -29,6 +30,9 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OpenfeignTest openfeignTest;
+
     /**
      * 登录
      * @param loginRequest
@@ -37,6 +41,10 @@ public class LoginController {
     @PostMapping("login")
     @ApiOperation("登录")
     public ResultData register(@RequestBody UserLoginRequest loginRequest){
+
+        //openfeign接口远程调用
+        int i = openfeignTest.testOpenfeign(2);
+        System.out.println("openfeign====="+i);
         LoginUser loginUser = LoginUser.builder().id(1L).name("DJX").mail("1176322485@QQ.COM").headImg("123.png").build();
         String token = JWTUtil.geneJsonWebToken(loginUser);
         return ResultData.buildSuccess(token);

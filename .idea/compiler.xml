@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="shop-coupon" />
         <module name="shopjobadmin" />
         <module name="shopgateway" />
         <module name="shopjobexecutor" />
@@ -13,15 +14,14 @@
         <module name="shopuserservice" />
         <module name="shop-order" />
         <module name="shopuserapi" />
-        <module name="shop-product" />
-        <module name="shop-coupon" />
+        <module name="shopproductapi" />
+        <module name="shopproductservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="shop-coupon-service" target="1.8" />
       <module name="shopcouponservice" target="1.8" />
       <module name="shoporderservice" target="1.8" />
-      <module name="shopproductservice" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
