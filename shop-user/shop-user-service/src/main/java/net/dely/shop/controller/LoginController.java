@@ -12,6 +12,8 @@ import net.dely.shop.util.CommonUtil;
 import net.dely.shop.util.JWTUtil;
 import net.dely.shop.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/user/login")
 @Slf4j
 @Api(tags = "登录相关接口")
+@RefreshScope
 public class LoginController {
 
     @Autowired
@@ -32,6 +35,9 @@ public class LoginController {
 
     @Autowired
     private OpenfeignTest openfeignTest;
+
+    @Value("${test.value}")
+    private String testvalue;
 
     /**
      * 登录
@@ -51,6 +57,21 @@ public class LoginController {
     }
 
     /**
+     * 测试feign
+     * @param num
+     * @return
+     */
+    @PostMapping("feign")
+    @ApiOperation("测试feign")
+    public ResultData feign(Integer num){
+
+        //openfeign接口远程调用
+        int i = openfeignTest.testOpenfeign(num);
+        System.out.println("openfeign====="+i);
+        return ResultData.buildSuccess(i);
+    }
+
+    /**
      * 测试TOKEN内容
      * @return
      */
@@ -62,6 +83,6 @@ public class LoginController {
         String headImg = (String) claims.get("headImg");
         Integer id = (Integer) claims.get("id");
         String ipAddr = CommonUtil.getIpAddr(request);
-        return ResultData.buildSuccess(ipAddr);
+        return ResultData.buildSuccess(testvalue);
     }
 }

@@ -1,0 +1,39 @@
+#Tomcat
+server:
+  port: 9000
+
+spring:
+  application:
+    # 应用名称
+    name: shop-user-server
+  profiles:
+    # 环境配置
+    active: dev
+
+  cloud:
+    nacos:
+      # 服务发现
+      discovery:
+        # 服务注册地址
+        server-addr: 192.168.222.128:8848
+        #用于分组 测试
+        group: djx-mall
+        #dev 的id
+        namespace: 59e99910-5091-4a9b-bc3b-b3a44fdaf2bd
+      config:
+        # 配置中心地址
+        server-addr: 192.168.222.128:8848
+        #文件拓展格式
+        file-extension: yaml
+        #dev 的id
+        namespace: 59e99910-5091-4a9b-bc3b-b3a44fdaf2bd
+        # 扩展配置
+        extension-configs:
+          - data-id: ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            refresh: true
+        shared-configs:
+          - data-id: redis.yaml
+            refresh: true
+logging:
+  level:
+    com.alibaba.nacos.client.config.impl: WARN
