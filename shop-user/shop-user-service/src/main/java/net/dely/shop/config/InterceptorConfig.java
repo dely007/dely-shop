@@ -25,7 +25,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 //排查不拦截的路径
                 .excludePathPatterns("/user/login/login","/api/user/redission/");
 
-        //TODO 多线程 如何去解决
         //注册自定义拦截器，添加拦截路径和排除拦截路径
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
 
