@@ -78,6 +78,7 @@ public class LoginController {
     @GetMapping("getToken")
     @ApiOperation("测试TOKEN内容")
     public ResultData getToken(HttpServletRequest request){
+        log.info("testvalue:{}",testvalue);
         String token = "AuthorizationeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWx5c2hvcCIsImhlYWRJbWciOiIxMjMucG5nIiwiaWQiOjEsIm5hbWUiOiJESlgiLCJtYWlsIjoiMTE3NjMyMjQ4NUBRUS5DT00iLCJpYXQiOjE2NTc5ODQ5MDksImV4cCI6MTY1OTczNzk0MX0.Iof_PTvOL2rX_HkYeQpAm8TTS4vjtnJwZGilUYRN3Y8";
         Claims claims = JWTUtil.checkJWT(token);
         String headImg = (String) claims.get("headImg");

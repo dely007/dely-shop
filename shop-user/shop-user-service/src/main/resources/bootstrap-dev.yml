@@ -15,18 +15,18 @@ spring:
       # 服务发现
       discovery:
         # 服务注册地址
-        server-addr: 192.168.222.128:8848
+        server-addr: 192.168.31.86:8848
         #用于分组 测试
-        group: djx-mall
+        group: DJX_GROUP
         #dev 的id
-        namespace: 59e99910-5091-4a9b-bc3b-b3a44fdaf2bd
+        namespace: d9824f90-b15d-4cd4-b657-b3b1c6381484
       config:
         # 配置中心地址
-        server-addr: 192.168.222.128:8848
+        server-addr: 192.168.31.86:8848
         #文件拓展格式
         file-extension: yaml
         #dev 的id
-        namespace: 59e99910-5091-4a9b-bc3b-b3a44fdaf2bd
+        namespace: d9824f90-b15d-4cd4-b657-b3b1c6381484
         # 扩展配置
         extension-configs:
           - data-id: ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

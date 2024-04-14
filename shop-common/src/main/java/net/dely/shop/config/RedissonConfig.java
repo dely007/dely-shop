@@ -22,8 +22,8 @@ public class RedissonConfig {
     @Value("${spring.redis.port}")
     private String redisPort;
 
-    @Value("${spring.redis.password}")
-    private String redisPwd;
+    /*@Value("${spring.redis.password}")
+    private String redisPwd;*/
 
     /**
      * 配置分布式锁
@@ -35,7 +35,7 @@ public class RedissonConfig {
 
         //单机模式
         //config.useSingleServer().setPassword("123456").setAddress("redis://8.129.113.233:3308");
-        config.useSingleServer().setPassword(redisPwd).setAddress("redis://"+redisHost+":"+redisPort);
+        config.useSingleServer()/*.setPassword(redisPwd)*/.setAddress("redis://"+redisHost+":"+redisPort);
 
         //集群模式
         //config.useClusterServers()
