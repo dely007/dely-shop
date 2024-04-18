@@ -142,6 +142,11 @@ public class LoginController {
                 }
             });
         }
+
+        log.error("test error log :{}",testvalue);
+        int i = 1/0;
         return ResultData.buildSuccess(testvalue);
     }
+
+
 }

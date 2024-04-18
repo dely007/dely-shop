@@ -22,11 +22,11 @@ public class ExceptionHandle {
 
         if (e instanceof BizException) {
             BizException bizException = (BizException) e;
-            log.info("[业务异常]{}", e);
+            log.info("[业务异常]", e);
             return ResultData.buildCodeAndMsg(bizException.getCode(),bizException.getMsg());
 
         } else {
-            log.info("[系统异常]{}", e);
+            log.info("[系统异常]", e);
             return ResultData.buildError(e.getMessage());
         }
 

@@ -5,9 +5,9 @@
 <!-- debug="false"当此属性设置为true时，将复印出logback内部日志信息，实时查看logback运行状态。默认值为false。-->
 <configuration scan="true" scanPeriod="30 seconds">
 
-    <conversionRule conversionWord="msg" converterClass="net.dely.shop.config.SensitiveDataLogConfig" />
+    <conversionRule conversionWord="msg" converterClass="net.dely.shop.config.SensitiveDataLogConfig"/>
     <!-- 处理日志脱敏  -->
-    <conversionRule conversionWord="msgtwo" converterClass="net.dely.shop.config.SensitiveDataLogConfig" />
+    <conversionRule conversionWord="msgtwo" converterClass="net.dely.shop.config.SensitiveDataLogConfig"/>
 
     <!-- 上下文名称  -->
     <contextName>${applicationName}</contextName>
@@ -16,6 +16,12 @@
     <property name="LOG_PATH" value="/shopLog/log"/>
     <property name="Log_AUDIT" value="/shopLog/auditlog"/>
 
+    <springProperty scope="context" name="module_name" source="spring.application.name"/>
+    <springProperty scope="context" name="active" source="spring.profiles.active"/>
+
+    <!--获取主机名-->
+    <define name="hostname" class="net.dely.shop.config.log.HostNamePropertyDefiner"/>
+
     <!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
@@ -23,6 +29,31 @@
 
             <pattern>[TRACEID:%X{traceId}]| %d{yyyy-MM-dd HH:mm:ss}| %-5level| [%thread]| %logger{50}| %msg%n</pattern>
         </encoder>
+
+        <!--<encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "app": "${module_name}",
+                        "active": "${active}",
+                        "host": "${hostname}",
+                        "traceId": "%X{traceId}",
+                        "uid": "%X{uid}",
+                        "time": "%date{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "pid": "${PID:-}",
+                        "class": "%logger",
+                        "method":"%method",
+                        "line":"%line",
+                        "message":"%message",
+                        "stack_trace": "%exception"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>-->
+
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
@@ -85,9 +116,34 @@
             </TimeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
 
-        <encoder>
+        <!--<encoder>
             <Pattern>[TRACEID:%X{traceId}]| %d{yyyy-MM-dd HH:mm:ss}| %-5level|%thread| %logger{50}| %msg%n</Pattern>
+        </encoder>-->
+
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "app": "${module_name}",
+                        "active": "${active}",
+                        "host": "${hostname}",
+                        "traceId": "%X{traceId}",
+                        "uid": "%X{uid}",
+                        "time": "%date{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "pid": "${PID:-}",
+                        "class": "%logger",
+                        "method":"%method",
+                        "line":"%line",
+                        "message":"%message",
+                        "stack_trace": "%exception"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
         </encoder>
+
     </appender>
 
 
@@ -180,7 +236,7 @@
             </TimeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
 
-          <encoder>
+        <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss}| %-5level|%thread| %logger{50}| %msgtwo%n</Pattern>
         </encoder>
     </appender>
